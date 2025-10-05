@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Product from "../models/Product.model.js";
+import Product from "../models/Product.model.ts";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
@@ -34,7 +34,7 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     const product = Product.create(req.body);
 
-    res.json({ data: product });
+    res.status(201).json({ data: product });
   } catch (error) {
     console.log(error);
   }

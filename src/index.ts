@@ -1,4 +1,4 @@
-import server from "./server.js";
+import server from "./server.ts";
 import colors from "colors";
 
 const PORT = process.env.PORT || 3000;

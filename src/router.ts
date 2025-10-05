@@ -7,8 +7,8 @@ import {
   getProducts,
   updateAvailabilityProduct,
   updateProduct,
-} from "./handlers/product.js";
-import { handleInputErrors } from "./middleware/index.js";
+} from "./handlers/product.ts";
+import { handleInputErrors } from "./middleware/index.ts";
 
 const router = Router();
 
@@ -27,11 +27,9 @@ router.get(
 );
 router.post(
   "/",
-  await body("name")
-    .notEmpty()
-    .withMessage("El nombre del producto es obligatorio"),
+  body("name").notEmpty().withMessage("El nombre del producto es obligatorio"),
 
-  await body("price")
+  body("price")
     .isNumeric()
     .withMessage("Valor no valido")
     .notEmpty()
@@ -43,11 +41,9 @@ router.post(
 );
 router.put(
   "/:id",
-  await body("name")
-    .notEmpty()
-    .withMessage("El nombre del producto es obligatorio"),
+  body("name").notEmpty().withMessage("El nombre del producto es obligatorio"),
 
-  await body("price")
+  body("price")
     .isNumeric()
     .withMessage("Valor no valido")
     .notEmpty()
@@ -55,7 +51,7 @@ router.put(
     .custom((value) => value > 0)
     .withMessage("Precio no valido"),
 
-  await body("availability")
+  body("availability")
     .isBoolean()
     .withMessage("Valor para disponibilidad no valido"),
   handleInputErrors,
@@ -64,7 +60,7 @@ router.put(
 
 router.patch(
   "/:id",
-  await body("availability")
+  body("availability")
     .isBoolean()
     .withMessage("Valor para disponibilidad no valido"),
   handleInputErrors,
