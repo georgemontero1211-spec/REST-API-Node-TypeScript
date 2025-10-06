@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon --exec \"node --loader ts-node/esm\" ./src/index.ts",
     "test": "jest --detectOpenHandles",
+    "test:coverage": "npm run pretest && jest --detectOpenHandles --coverage",
     "pretest" : "npx tsx src/data/index.ts --clear"
   },
   "author": "George Montero",

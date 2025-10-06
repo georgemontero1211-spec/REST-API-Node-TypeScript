@@ -41,6 +41,13 @@ router.post(
 );
 router.put(
   "/:id",
+  param("id")
+    .notEmpty()
+    .withMessage("Tienes que poner un id para poder buscarlo")
+    .isInt()
+    .withMessage("El valor tiene que ser numerico")
+    .custom((value) => value > 0)
+    .withMessage("ID no valido"),
   body("name").notEmpty().withMessage("El nombre del producto es obligatorio"),
 
   body("price")
