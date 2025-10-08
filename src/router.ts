@@ -249,9 +249,13 @@ router.put(
 
 router.patch(
   "/:id",
-  body("availability")
-    .isBoolean()
-    .withMessage("Valor para disponibilidad no valido"),
+  param("id")
+    .notEmpty()
+    .withMessage("Tienes que poner un id para poder buscarlo")
+    .isInt()
+    .withMessage("El valor tiene que ser numerico")
+    .custom((value) => value > 0)
+    .withMessage("ID no valido"),
   handleInputErrors,
   updateAvailabilityProduct
 );

@@ -1,8 +1,10 @@
 import express from "express";
 import colors from "colors";
+import cors, { CorsOptions } from "cors";
+import morgan from "morgan";
 import router from "./router.ts";
 import db from "./config/db.ts";
-import swaggerUi from "swagger-ui-express";
+import swaggerUi, { serve } from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.ts";
 //Conectar a base da datos
 async function connectDB() {
@@ -18,10 +20,26 @@ async function connectDB() {
   }
 }
 connectDB();
+//Instancia de express
 const server = express();
+//Permitir conexiones
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      console.log(origin);
 
+      callback(new Error("Error de cors "));
+    }
+  },
+};
+server.use(cors(corsOptions));
+
+//Leer datos de formularios
 server.use(express.json());
 
+server.use(morgan("dev"));
 //Routing
 server.use("/api/products", router);
 server.get("/api", (req, res) => {
